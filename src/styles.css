@@ -670,6 +670,308 @@ h3 {
   margin-bottom: 0.5rem;
 }
 
+/* ============================================================================
+   Machine finder — category/make/model drill-down
+   ============================================================================ */
+.finder {
+  max-width: 760px;
+}
+
+.finder h1 {
+  margin-top: 0.6rem;
+}
+
+.finder-lede {
+  margin-top: 0.6rem;
+  max-width: 46ch;
+}
+
+/* Breadcrumb: past steps are clickable buttons styled like the header nav's
+   active-tab tick, so "you can step back" reads the same way as "you are here". */
+.finder-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.finder-crumb {
+  background: none;
+  border: none;
+  padding: 0.2rem 0.3rem;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--dur) var(--ease);
+}
+
+.finder-crumb:hover {
+  background: var(--surface-2);
+}
+
+/* Step 1 + 3: card tiles in a responsive grid. */
+.finder-grid {
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.finder-tile {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.finder-tile:hover {
+  border-color: var(--accent);
+}
+
+.finder-tile-count {
+  margin-top: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.finder-model {
+  display: block;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.finder-model:hover {
+  border-color: var(--accent);
+}
+
+.finder-model-engine {
+  margin-top: 0.3rem;
+  font-size: 0.88rem;
+}
+
+.finder-model-years {
+  margin-top: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Step 2: makes as a wrapping row of chip-like buttons — picking a
+   manufacturer doesn't need full card weight. */
+.finder-chip-grid {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.finder-make {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.finder-make:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================================================
+   Machine results — requirement chips, drain data plate, recommendations
+   ============================================================================ */
+.results {
+  max-width: 860px;
+}
+
+.results h1 {
+  margin-top: 0.6rem;
+}
+
+.results-meta {
+  margin-top: 0.4rem;
+}
+
+.results-req-chips {
+  margin-top: 1.5rem;
+}
+
+.oil-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* Drain panel: the page's signature element — a two-gauge data plate. Large
+   tabular-nums figures read like an odometer; the severe column carries the
+   one accent color because it's the actionable number in Gulf conditions. */
+.drain-panel {
+  margin-top: 2rem;
+  display: flex;
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+}
+
+.drain-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.drain-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.drain-figure {
+  margin-top: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+
+.drain-figure-accent {
+  color: var(--accent);
+}
+
+.drain-or {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin-top: 0.15rem;
+}
+
+.drain-severe-note {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+}
+
+.drain-divider {
+  width: 1px;
+  background: var(--line);
+  margin-inline: 1.75rem;
+  flex-shrink: 0;
+}
+
+.drain-sump {
+  margin-top: 1rem;
+}
+
+.drain-tip {
+  margin-top: 0.35rem;
+  color: var(--accent);
+  font-size: 0.92rem;
+}
+
+.results-recs-heading {
+  margin-top: 2.5rem;
+}
+
+.results-recs {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.results-empty {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.results-empty h1 {
+  margin-top: 0;
+}
+
+.results-empty .btn {
+  margin-top: 0.5rem;
+}
+
+/* ============================================================================
+   Oil card — used by machine results and (later) the equivalents finder
+   ============================================================================ */
+.oil-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.oil-card-badge {
+  position: absolute;
+  top: -0.6rem;
+  right: 1.25rem;
+}
+
+.oil-card-head h3 {
+  margin-top: 0.15rem;
+}
+
+.oil-card-reasons {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.oil-card-reasons li {
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+/* A small amber tick instead of a bullet glyph — ties back to the chip/plate
+   language rather than a generic list marker. */
+.oil-card-reasons li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.oil-card-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
   .header-inner {
@@ -705,5 +1007,26 @@ h3 {
   .search-results,
   .entries {
     grid-template-columns: 1fr;
+  }
+
+  .finder-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drain-panel {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .drain-divider {
+    width: 100%;
+    height: 1px;
+    margin-inline: 0;
+  }
+
+  .oil-card-badge {
+    position: static;
+    display: inline-flex;
+    margin-bottom: -0.25rem;
   }
 }
