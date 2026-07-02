@@ -972,6 +972,108 @@ h3 {
   margin-top: 0.25rem;
 }
 
+/* ============================================================================
+   Product page — TDS table, OEM approvals, cross-brand equivalents
+   ============================================================================ */
+.product {
+  max-width: 860px;
+}
+
+.product h1 {
+  margin-top: 0.6rem;
+}
+
+.product-chips {
+  margin-top: 1.5rem;
+}
+
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.product-section {
+  margin-top: 2.5rem;
+}
+
+.product-section-heading {
+  margin-bottom: 1rem;
+}
+
+/* TDS table row headers stack the field label above its plain-English
+   explanation — the signature move that turns the table into a teaching
+   surface instead of a bare number dump. */
+.product-tds th[scope='row'] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 32ch;
+}
+
+.product-tds-explain {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink-soft);
+}
+
+.product-tds td {
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.product-tier + .product-tier {
+  margin-top: 2rem;
+}
+
+.product-tier-heading {
+  margin-bottom: 1rem;
+}
+
+/* More breathing room between equivalent items than inside one, so each
+   card + meta plate reads as a single unit. */
+.product-tier .results-recs {
+  gap: 1.75rem;
+}
+
+.product-equivalent {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The "meta plate": score + differences docked to the bottom of the card via
+   an amber left rule, indented to align with the card's content. */
+.product-equivalent-meta {
+  margin-left: 1.25rem;
+  padding: 0.6rem 0 0 0.85rem;
+  border-left: 2px solid rgba(232, 163, 61, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.product-equivalent-score {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.product-equivalent-diffs-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.3rem;
+}
+
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
   .header-inner {
@@ -1028,5 +1130,13 @@ h3 {
     position: static;
     display: inline-flex;
     margin-bottom: -0.25rem;
+  }
+
+  .product-tds th[scope='row'] {
+    max-width: none;
+  }
+
+  .product-tds td {
+    white-space: normal;
   }
 }
