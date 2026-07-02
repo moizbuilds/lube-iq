@@ -1298,9 +1298,11 @@ h3 {
 
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
-  /* Below 720px .tray-inner switches to flex-direction: column (items stack
-     above actions), which makes the tray noticeably taller than desktop —
-     true up the reserved clearance so the footer still clears it here too. */
+  /* Below 720px the tray stacks label / items / actions vertically, but the
+     items row itself never wraps (it scrolls sideways instead — see
+     .tray-items below), so the tray height stays CONSTANT no matter how
+     many oils are selected. This override reserves exactly that height so
+     the footer always clears the tray. */
   :root {
     --tray-h: 150px;
   }
@@ -1324,7 +1326,30 @@ h3 {
   .tray-inner {
     align-items: stretch;
     flex-direction: column;
+    /* Base .tray-inner wraps; in column direction a wrapped flex line sizes
+       to its content's widest child, which would let the items row below
+       stretch past the viewport instead of scrolling. nowrap keeps every
+       row pinned to the container width so overflow-x can do its job. */
+    flex-wrap: nowrap;
     gap: 0.75rem;
+  }
+
+  /* One horizontally-scrollable row instead of wrapping — the same pattern
+     the compare table uses. This is what keeps the tray's height constant
+     regardless of how many oils are in it (wrapping grew it ~42px per item,
+     pushing it over the footer clearance). */
+  .tray-items {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px; /* keeps item borders clear of the scrollbar edge */
+  }
+
+  /* Items must not shrink to fit — they keep a readable width and the row
+     scrolls instead. Long names still truncate via the existing ellipsis. */
+  .tray-item {
+    flex-shrink: 0;
+    max-width: 200px;
   }
 
   .tray-actions {
