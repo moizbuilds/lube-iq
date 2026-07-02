@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx';
 import MachineFinder from './pages/MachineFinder.jsx';
 import MachineResults from './pages/MachineResults.jsx';
 import Product from './pages/Product.jsx';
+import Compare from './pages/Compare.jsx';
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
           <Route path="/machines" element={<MachineFinder />} />
           <Route path="/machines/:id" element={<MachineResults />} />
           <Route path="/oils/:id" element={<Product />} />
-          <Route path="/compare" element={<h1>Compare</h1>} />
+          <Route path="/compare" element={<Compare />} />
           <Route path="/guide" element={<h1>Guidelines</h1>} />
         </Routes>
       </Shell>

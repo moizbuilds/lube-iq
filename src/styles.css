@@ -1074,6 +1074,155 @@ h3 {
   margin-bottom: 0.3rem;
 }
 
+/* ============================================================================
+   Compare page — multi-column data plate with winner highlighting
+   ============================================================================ */
+.compare {
+  max-width: 1080px;
+}
+
+.compare h1 {
+  margin-top: 0.6rem;
+}
+
+.compare-lede {
+  margin-top: 0.6rem;
+  max-width: 68ch;
+}
+
+/* Hidden by default — only the mobile scroll affordance below 720px needs it. */
+.compare-scroll-hint {
+  display: none;
+  margin-top: 1.25rem;
+  font-size: 0.82rem;
+}
+
+/* The scrollable region itself. tabIndex + aria-label (set in JSX) make it a
+   reachable, announced landmark for keyboard and screen-reader users, not
+   just a visual overflow. Focus ring shows the region is interactive. */
+.compare-scroll {
+  margin-top: 1.75rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.compare-table {
+  min-width: 640px;
+}
+
+.compare-table th,
+.compare-table td {
+  white-space: nowrap;
+}
+
+/* Column header: brand/name stacked over a small remove control, so dropping
+   one oil from the comparison never requires leaving the table. */
+.compare-col-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.compare-col-brand {
+  font-size: 0.68rem;
+}
+
+.compare-col-name {
+  margin-top: 0.15rem;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: normal;
+  white-space: normal;
+}
+
+.compare-col-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.compare-col-remove:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+/* Row label stacks: field name, its plain-English explanation (same pattern
+   as the single-product TDS table), then the verdict line judging this
+   specific set of oils — the sentence that makes the page more than a table. */
+.compare-table th[scope='row'] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 30ch;
+  white-space: normal;
+}
+
+.compare-verdict {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--accent);
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+/* Same amber tick used by .oil-card-reasons — ties the verdict line back to
+   an existing "reason" pattern instead of inventing a new marker. */
+.compare-verdict::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+/* The winner cell: the page's signature move. An etched amber rule above and
+   below the value reads like a stamped panel on a gauge face — quieter than a
+   floating badge, but unmistakable at a glance across a wide table. */
+.compare-cell-best {
+  position: relative;
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 var(--accent), inset 0 -1px 0 var(--accent);
+  background: rgba(232, 163, 61, 0.06);
+}
+
+.compare-best-tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  vertical-align: middle;
+}
+
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
   .header-inner {
@@ -1138,5 +1287,20 @@ h3 {
 
   .product-tds td {
     white-space: normal;
+  }
+
+  .compare-scroll-hint {
+    display: block;
+  }
+
+  /* Pin the property-label column while the rest of the table scrolls under
+     it, with a hairline + gradient fade so it reads as anchored, not clipped. */
+  .compare-table th[scope='row'] {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    max-width: 200px;
   }
 }
