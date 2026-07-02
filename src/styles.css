@@ -1,0 +1,508 @@
+/* ============================================================================
+   Lube IQ — design system.
+   The visual foundation every page inherits: color/type tokens, a base reset,
+   the type scale, and the four shared component classes (.btn, .card, .chip,
+   .table). Direction: "precision instrument for machines" — a dark, warm
+   garage-meets-laboratory look. Near-black charcoal, clean-oil amber accent,
+   a squared technical face for headings and a clean grotesk for body text.
+   Later tasks reference these CSS variables and classes, so they are the
+   stable contract; keep the names.
+   ============================================================================ */
+
+/* --- Design tokens -------------------------------------------------------- */
+/* CONCEPT: CSS custom properties (variables) declared on :root are global —
+   any rule in the app can read them with var(--name). Change a value here and
+   it updates everywhere, so this block is the single source of visual truth. */
+:root {
+  /* Color: warm charcoal base, amber (the colour of clean oil) as the one accent. */
+  --bg: #141210;          /* page background — near-black, warmed toward brown */
+  --surface: #1d1a16;     /* raised panels: cards, header, tray */
+  --surface-2: #26221c;   /* hover / inset wells one step lighter than surface */
+  --ink: #f2ede4;         /* primary text — warm off-white, easier than pure white */
+  --ink-soft: #9a9187;    /* secondary text: labels, captions, muted meta */
+  --accent: #e8a33d;      /* oil-gold — used sparingly for emphasis and actions */
+  --accent-ink: #171310;  /* text that sits on top of an amber fill */
+  --line: #2e2a24;        /* hairline rules and borders */
+  --radius: 10px;         /* one corner radius, used everywhere for consistency */
+
+  --font-display: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion + spacing scale kept small and deliberate. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 170ms;
+  --tray-h: 84px;         /* space reserved so the fixed tray never covers content */
+}
+
+/* --- Base reset ----------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* CONCEPT: color-scheme: dark tells the browser to render native UI (scrollbars,
+     form controls) in their dark variants, so they match our theme. */
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  /* Subtle radial warmth in the top-left, like light falling on a workbench. */
+  background-image: radial-gradient(
+    120% 80% at 12% -10%,
+    rgba(232, 163, 61, 0.06),
+    transparent 60%
+  );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- Type scale ----------------------------------------------------------- */
+/* Display face for headings: squared, technical, tracked out a touch so it
+   reads like a stamped instrument label rather than body copy. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance; /* keeps headings from leaving a lone word on the last line */
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+/* CONCEPT: an "eyebrow" is a small tracked-out label above a heading. It sets
+   context in a technical, machine-plate voice. */
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+/* --- Focus: visible on every interactive element -------------------------- */
+/* CONCEPT: :focus-visible shows a ring only for keyboard users, so mouse
+   clicks stay clean while keyboard navigation is always clearly tracked. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- Layout container ----------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* --- Buttons -------------------------------------------------------------- */
+/* .btn is the base; add .btn-ghost for the outlined variant. Solid amber is
+   the primary action, used once per view. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.62rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  cursor: pointer;
+  /* touch-action removes the 300ms tap delay on mobile taps. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.btn:hover {
+  background: #f2b455;
+  border-color: #f2b455;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn-ghost:hover {
+  background: var(--surface-2);
+  border-color: var(--ink-soft);
+}
+
+/* CONCEPT: [disabled] and .is-disabled dim the control and turn off the
+   pointer so a not-yet-usable action reads as inactive but still visible. */
+.btn:disabled,
+.btn.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Card ----------------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+/* --- Chip (viscosity / API / spec badges) --------------------------------- */
+/* Small stamped tags. Tabular numerals keep grade digits aligned. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.24rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.chip-accent {
+  border-color: rgba(232, 163, 61, 0.4);
+  color: var(--accent);
+  background: rgba(232, 163, 61, 0.08);
+}
+
+/* --- Table (spec "data plate") -------------------------------------------- */
+/* Reads like a machined data plate: hairline row rules, tracked labels on the
+   left, tabular figures on the right so decimals line up column-perfect. */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.table thead th {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.table tbody th {
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.table tbody td {
+  color: var(--ink);
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+/* CONCEPT: this media query respects the OS "reduce motion" setting for users
+   who get discomfort from animation — we drop transitions for them. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   App shell — header, nav, footer, main
+   ============================================================================ */
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header sits at the top, hairline underline, faint blur so content scrolls
+   under it cleanly. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(20, 18, 16, 0.82);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 66px;
+}
+
+/* Wordmark: "Lube" in ink, "IQ" set in a small amber machined tag. */
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+.wordmark-tag {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 5px;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Nav links. Active route gets an amber underline tick — the instrument
+   "you are here" indicator. */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-link {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.nav-link.is-active {
+  color: var(--accent);
+}
+
+.nav-link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.15rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Main flexes to fill so the footer stays at the bottom; bottom padding keeps
+   content clear of the fixed compare tray. */
+.main {
+  flex: 1;
+  padding-block: 2.5rem 3rem;
+  padding-bottom: calc(3rem + var(--tray-h));
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding-block: 1.5rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+/* ============================================================================
+   Compare tray — docked instrument readout at the bottom of the screen
+   ============================================================================ */
+.tray {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  background: rgba(29, 26, 22, 0.92);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.45);
+}
+
+.tray-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: var(--tray-h);
+  padding-block: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.tray-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.tray-items {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Each selected oil is a removable slug: name + an X remove control. */
+.tray-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.35rem 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  max-width: 100%;
+}
+
+/* Long product names truncate rather than blowing out the tray width. */
+.tray-item > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.tray-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.tray-remove:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.tray-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* --- Responsive: single column under 720px -------------------------------- */
+@media (max-width: 720px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-block: 0.75rem;
+  }
+
+  .nav {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    padding-inline: 0.5rem;
+  }
+
+  .tray-inner {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tray-actions {
+    justify-content: space-between;
+  }
+}
