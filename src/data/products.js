@@ -1042,6 +1042,13 @@ export const PRODUCTS = [
     id: 'qatol-sigma-mco-4t-20w-50',
     brand: 'Qatol',
     name: 'Sigma MCO-4T 20W-50 API SL',
+    // KNOWN SOURCE INCONSISTENCY — do not "fix" blindly. Qatol's product page
+    // title/URL sell this as SAE 20W50, but its own TDS PDF
+    // (qatol.com/wp-content/uploads/50.pdf) titles the very same fluid
+    // "SAE 20W40(JASO-MA2)" and both sources publish a KV100 of 15.4 cSt,
+    // which sits in the SAE J300 xW-40 band (a 50 needs >=16.3). We keep the
+    // manufacturer's declared retail grade (20W-50 — what is printed on the
+    // bottle and what buyers search for) and their published values verbatim.
     viscosity: '20W-50',
     baseType: 'mineral',
     category: 'motorcycle',
@@ -1049,8 +1056,8 @@ export const PRODUCTS = [
     acea: [],
     jaso: 'MA2',
     oemApprovals: [],
-    // TBN not published on the page; 7.0 used as a representative value
-    // (same basis as the 10W-40 Sigma MCO-4T above).
+    // TBN not published on the page or TDS PDF; 7.0 used as a representative
+    // value (same basis as the 10W-40 Sigma MCO-4T above).
     specs: { visc40: 136.4, visc100: 15.4, viscosityIndex: 113, flashPoint: 228, pourPoint: -24, tbn: 7.0, density: 0.87 },
     datasheetUrl: 'https://www.qatol.com/product/qatol-sigma-mco-4t-sae-20w50-api-sl/',
   },
