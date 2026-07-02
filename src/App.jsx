@@ -5,6 +5,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { CompareProvider } from './CompareContext.jsx';
 import Shell from './components/Shell.jsx';
+import Home from './pages/Home.jsx';
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
     <CompareProvider>
       <Shell>
         <Routes>
-          <Route path="/" element={<h1>Home</h1>} />
+          <Route path="/" element={<Home />} />
           <Route path="/machines" element={<h1>Machine finder</h1>} />
           <Route path="/machines/:id" element={<h1>Machine results</h1>} />
           <Route path="/oils/:id" element={<h1>Product</h1>} />

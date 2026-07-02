@@ -478,6 +478,198 @@ h3 {
   gap: 0.6rem;
 }
 
+/* ============================================================================
+   Home — hero, search bezel, entry cards
+   ============================================================================ */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.hero {
+  max-width: 640px;
+}
+
+.hero h1 {
+  margin-top: 0.6rem;
+}
+
+.hero-lede {
+  margin-top: 0.85rem;
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
+/* Search "bezel": an instrument-readout frame around the input, echoing the
+   chip/table data-plate language rather than a generic rounded search pill.
+   Corner ticks (::before/::after) give it the one signature flourish. */
+.search-bezel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color var(--dur) var(--ease);
+}
+
+.search-bezel:focus-within {
+  border-color: var(--accent);
+}
+
+/* Corner tick marks — the viewfinder motif. Purely decorative, so hidden
+   from assistive tech; the real label is the visible <label> element. */
+.search-bezel::before,
+.search-bezel::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--accent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.search-bezel::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.search-bezel::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.search-label {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.7rem 0.6rem;
+}
+
+.search-input::placeholder {
+  color: var(--ink-soft);
+}
+
+/* The bezel itself shows focus via border-color (see :focus-within above),
+   so the input's own ring is suppressed only for :focus-visible to avoid a
+   double outline — keyboard users still see the bezel highlight clearly. */
+.search-input:focus-visible {
+  outline: none;
+}
+
+.search-results {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.result-group {
+  min-width: 0;
+}
+
+.result-heading {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.result-list {
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.2rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur) var(--ease);
+}
+
+.result-row:hover {
+  color: var(--accent);
+}
+
+.result-row > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.search-empty {
+  grid-column: 1 / -1;
+  color: var(--ink-soft);
+}
+
+.search-empty a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.entries {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Entry cards are both <Link> and <button> — normalize the button reset and
+   give both the same hover lift so "I know my machine" / "I know my oil"
+   read as equally weighted choices. */
+.entry-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.entry-card:hover {
+  border-color: var(--accent);
+}
+
+.entry-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
   .header-inner {
@@ -504,5 +696,14 @@ h3 {
 
   .tray-actions {
     justify-content: space-between;
+  }
+
+  .search-bezel {
+    padding-left: 0.85rem;
+  }
+
+  .search-results,
+  .entries {
+    grid-template-columns: 1fr;
   }
 }
