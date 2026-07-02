@@ -1223,6 +1223,76 @@ h3 {
   vertical-align: middle;
 }
 
+/* ============================================================================
+   Guide page — numbered reading sections with a "spine" numeral column
+   ============================================================================ */
+.guide {
+  max-width: 720px;
+}
+
+.guide h1 {
+  margin-top: 0.6rem;
+}
+
+.guide-lede {
+  margin-top: 0.6rem;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+.guide-sections {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Each section pairs a large tracked numeral with its content, separated by
+   a hairline rule — the same "data plate" rhythm as the drain panel, but
+   built for prose instead of figures. The numbering is earned here: these
+   five topics are a real sequence a new owner runs into in this order. */
+.guide-section {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1.5rem;
+  padding-block: 2.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.guide-section:last-child {
+  padding-bottom: 0;
+}
+
+.guide-spine {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--line);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.guide-content h2 {
+  font-size: 1.4rem;
+}
+
+.guide-fact {
+  margin-top: 0.85rem;
+}
+
+.guide-body {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+.guide-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
   .header-inner {
@@ -1302,5 +1372,16 @@ h3 {
     background: var(--surface);
     border-right: 1px solid var(--line);
     max-width: 200px;
+  }
+
+  /* Spine numeral moves above the heading instead of beside it — a side
+     column reads cramped once the viewport narrows past 720px. */
+  .guide-section {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .guide-spine {
+    font-size: 1.4rem;
   }
 }
