@@ -31,7 +31,7 @@
   /* Motion + spacing scale kept small and deliberate. */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --dur: 170ms;
-  --tray-h: 84px;         /* space reserved so the fixed tray never covers content */
+  --tray-h: 106px;        /* space reserved so the fixed tray never covers content */
 }
 
 /* --- Base reset ----------------------------------------------------------- */
@@ -369,17 +369,20 @@ h3 {
   border-radius: 2px;
 }
 
-/* Main flexes to fill so the footer stays at the bottom; bottom padding keeps
-   content clear of the fixed compare tray. */
+/* Main flexes to fill so the footer stays at the bottom. */
 .main {
   flex: 1;
   padding-block: 2.5rem 3rem;
-  padding-bottom: calc(3rem + var(--tray-h));
 }
 
+/* Bottom padding on the footer (not .main) keeps the footer's own text clear
+   of the fixed compare tray too — .main alone only protected page content
+   above it, leaving the footer sitting underneath the tray whenever it's
+   visible. */
 .footer {
   border-top: 1px solid var(--line);
   padding-block: 1.5rem;
+  padding-bottom: calc(1.5rem + var(--tray-h));
   color: var(--ink-soft);
   font-size: 0.85rem;
 }
@@ -1295,6 +1298,13 @@ h3 {
 
 /* --- Responsive: single column under 720px -------------------------------- */
 @media (max-width: 720px) {
+  /* Below 720px .tray-inner switches to flex-direction: column (items stack
+     above actions), which makes the tray noticeably taller than desktop —
+     true up the reserved clearance so the footer still clears it here too. */
+  :root {
+    --tray-h: 150px;
+  }
+
   .header-inner {
     flex-direction: column;
     align-items: flex-start;

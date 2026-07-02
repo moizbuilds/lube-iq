@@ -107,4 +107,27 @@ describe('compareSpec', () => {
     const r = compareSpec('visc100', [12, 14]);
     expect(r.winnerIndex).toBe(null);
   });
+  it('exact tie at best among three values badges both tied columns', () => {
+    // flashPoint: better 'higher', tolerance 5. 226 and 226 tie for best;
+    // 200 is well outside tolerance of that best.
+    const r = compareSpec('flashPoint', [226, 226, 200]);
+    expect(r.equal).toBe(false);
+    expect(r.winnerIndices).toEqual([0, 1]);
+    expect(r.winnerIndex).toBe(0);
+  });
+  it('a value within tolerance of best is a winner alongside it, a value outside is not', () => {
+    // pourPoint: better 'lower', tolerance 3. Best is -42; -40 is within 3 of
+    // it (honest tie); -20 is far outside tolerance and should not badge.
+    const r = compareSpec('pourPoint', [-42, -40, -20]);
+    expect(r.equal).toBe(false);
+    expect(r.winnerIndices).toEqual([0, 1]);
+  });
+  it('all three values within tolerance of each other collapses to no practical difference', () => {
+    // tbn: better 'higher', tolerance 0.5. 7.8, 7.9, 8.0 are all mutually
+    // within tolerance of the best (8.0) -> nobody badged.
+    const r = compareSpec('tbn', [7.8, 7.9, 8.0]);
+    expect(r.equal).toBe(true);
+    expect(r.winnerIndices).toEqual([]);
+    expect(r.winnerIndex).toBe(null);
+  });
 });

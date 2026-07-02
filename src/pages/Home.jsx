@@ -44,7 +44,6 @@ export default function Home() {
             id="home-search"
             ref={inputRef}
             role="searchbox"
-            aria-label="Search oils and machines"
             className="search-input"
             placeholder="Search an oil or a machine — e.g. Helix Ultra, Land Cruiser"
             value={query}

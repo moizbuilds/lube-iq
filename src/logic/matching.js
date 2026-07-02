@@ -134,18 +134,28 @@ export function findEquivalents(reference, products) {
     .sort((a, b) => b.score - a.score);
 }
 
-// Decide the winner of one data-sheet row. Honest by design: values within the
-// field's tolerance are "no practical difference", and context fields (like
-// plain viscosity) never get a winner because they are targets, not scores.
+// Decide the winner(s) of one data-sheet row. Honest by design: values within
+// the field's tolerance of the best value are "no practical difference" from
+// it, so they are ALL badged as winners together — an exact tie between two
+// values, or a close-but-not-quite value sitting inside tolerance of the
+// best, both count as winning, not just whichever happened to come first in
+// the array. Only when EVERY value in the row falls inside that tolerance of
+// each other does the whole row collapse to "no practical difference" and
+// nobody gets badged. Context fields (like plain viscosity) never get a
+// winner because they are targets, not scores.
 export function compareSpec(fieldKey, values) {
   const field = SPEC_FIELDS.find((f) => f.key === fieldKey);
   if (field.better === 'context') {
     return { winnerIndex: null, equal: true, explanation: field.consequence };
   }
   const best = field.better === 'higher' ? Math.max(...values) : Math.min(...values);
-  const worst = field.better === 'higher' ? Math.min(...values) : Math.max(...values);
-  if (Math.abs(best - worst) <= field.tolerance) {
-    return { winnerIndex: null, equal: true, explanation: 'No practical difference between these oils here.' };
+  // Every index whose value is within tolerance of the best value — this can
+  // be more than one (an exact tie, or a near-miss that's honestly no worse).
+  const winnerIndices = values
+    .map((v, i) => (Math.abs(v - best) <= field.tolerance ? i : -1))
+    .filter((i) => i !== -1);
+  if (winnerIndices.length === values.length) {
+    return { winnerIndex: null, winnerIndices: [], equal: true, explanation: 'No practical difference between these oils here.' };
   }
-  return { winnerIndex: values.indexOf(best), equal: false, explanation: field.consequence };
+  return { winnerIndex: winnerIndices[0], winnerIndices, equal: false, explanation: field.consequence };
 }

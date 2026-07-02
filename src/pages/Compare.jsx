@@ -139,7 +139,7 @@ export default function Compare() {
                 component only renders its answer, it never re-derives it. */}
             {SPEC_FIELDS.map((field) => {
               const values = oils.map((oil) => oil.specs[field.key]);
-              const { winnerIndex, equal, explanation } = compareSpec(field.key, values);
+              const { winnerIndices, equal, explanation } = compareSpec(field.key, values);
               return (
                 <tr key={field.key}>
                   <th scope="row">
@@ -151,7 +151,10 @@ export default function Compare() {
                     <span className="compare-verdict">{explanation}</span>
                   </th>
                   {oils.map((oil, i) => {
-                    const isWinner = !equal && i === winnerIndex;
+                    // Every column within tolerance of the best value is a
+                    // winner together — an honest tie badges both, not just
+                    // whichever column happened to come first.
+                    const isWinner = !equal && winnerIndices?.includes(i);
                     return (
                       <td key={oil.id} className={isWinner ? 'compare-cell-best' : undefined}>
                         {oil.specs[field.key]}
