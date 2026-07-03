@@ -40,7 +40,27 @@ Sort comparator becomes: tier (direct < close < partial), then
 `featured` first within the tier, then score desc. Each item gains
 `featured: boolean`. Scores and tiers are computed exactly as today.
 
-### 4. UI
+### 4. Featured justification ("Why Qatol") — src/logic/matching.js
+
+New pure function `featuredPitch(item, allRecs)` → string[] (1–3 lines),
+computed ONLY from true data, strongest angles first. Candidate claims, each
+emitted only when the data supports it, compared against the other fitting
+oils in the same result set:
+
+- Spec compliance framing: "Matches the manufacturer's required {grade}
+  exactly" / "API {x} — exceeds the {y} this engine requires".
+- Superlatives ONLY when literally true in this result set: highest TBN
+  ("longest-lasting protection between drains"), highest viscosity index
+  ("most temperature-stable"), highest flash point ("lowest burn-off in
+  Gulf heat"). Ties count as shared-best and use "among the highest".
+- Always available closer: "Blended in Qatar for Gulf conditions."
+
+Rules: never a claim the spec table contradicts; never suppresses or moves
+the bestMatch flag; renders on featured cards as a "Why {brand}" block.
+Same function powers featured equivalents on the product page (compared
+within the same tier group).
+
+### 5. UI
 
 - `OilCard` accepts `featured` prop → renders a "Featured" chip (visually
   distinct from "Best match"; uses existing chip styles).
@@ -49,7 +69,7 @@ Sort comparator becomes: tier (direct < close < partial), then
 - `Product` (equivalents): featured equivalents show the Featured chip;
   within-tier ordering comes from `findEquivalents` as-is.
 
-### 5. Explicitly unchanged
+### 6. Explicitly unchanged
 
 Compare page and `compareSpec`, search, `fitsMachine`, `equivalenceScore`,
 all datasets, guidelines.
@@ -62,6 +82,10 @@ Unit (matching.test.js):
   it; when the featured oil is also the neutral winner, it carries both flags.
 - `findEquivalents`: within a tier, featured sorts first; a featured
   lower-tier oil stays below a higher tier; scores unchanged.
+- `featuredPitch`: emits a superlative only when the value is genuinely
+  best (or tied-best with "among the highest" wording) in the result set;
+  never emits for a mid-pack value; always includes the compliance line
+  when the oil fits; output lines cap at 3.
 - No-featured-present behaviour: with a fixture containing no
   FEATURED_BRAND oils, flags are all false and order is purely neutral
   (equivalent to FEATURED_BRAND = null, which is a module constant and
